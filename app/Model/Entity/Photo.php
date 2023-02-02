@@ -40,7 +40,7 @@ class Photo{
      */
     public static function getPhotoById($id){
 
-        return (new Database('photos'))->select('id = '.$id)->fetchObject();
+        return (new Database('photos'))->select('id = '.$id)->fetchObject(self::class);
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Model\Entity;
 
 use WilliamCosta\DatabaseManager\Database;
 use App\Utils\Utilities;
+use PDO;
 
 class Photo{
 
@@ -31,11 +32,6 @@ class Photo{
      */
     public $date;
 
-    /**
-     * Photo url
-     * @var string
-     */
-    public $url;
 
     /**
      * Method to get an photo by id
@@ -44,7 +40,7 @@ class Photo{
      */
     public static function getPhotoById($id){
 
-        return (new Database('photos'))->select('id = '.$id)->fetch();
+        return (new Database('photos'))->select('id = '.$id)->fetchObject();
 
     }
 
@@ -54,7 +50,7 @@ class Photo{
      */
     public static function list(){
 
-        return (new Database('photos'))->select(null,'id DESC')->fetchAll();
+        return (new Database('photos'))->select(null,'id DESC')->fetchAll(PDO::FETCH_OBJ);
 
     }
 
@@ -74,10 +70,10 @@ class Photo{
         return true;
     }
 
-    public static function delete($obPhoto){
+    public static function delete($obPhoto,$obPhotoImgPath){
         // DELETE PRODUCT IMAGE
-        Utilities::deleteFile($obPhoto["img"], null);
+        Utilities::deleteFile($obPhotoImgPath, null);
         // DELETE PRODUCT
-        return (new Database('photos'))->delete('id = ' . $obPhoto["id"]);
+        return (new Database('photos'))->delete('id = ' . $obPhoto->id);
     }
 }

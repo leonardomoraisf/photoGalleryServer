@@ -18,12 +18,12 @@ class ApiPublic
     {
         $photos = EntityPhoto::list();
 
-        foreach ($photos as $key => $photo) {
-            $photos[$key]["url"] = UPLOADS . '/' . $photo["img"];
-            $photos[$key]["date"] = date('d/m/Y', strtotime($photo["date"]));
+        foreach($photos as $photo){
+            $photo->date = date('d/m/Y',strtotime($photo->date));
         }
 
         return $photos;
+
     }
 
     public static function setPhoto($request)
@@ -45,7 +45,7 @@ class ApiPublic
         }
 
         $obPhoto = new EntityPhoto;
-        $obPhoto->img = $upload;
+        $obPhoto->img = UPLOADS."/".$upload;
         $obPhoto->legend = $legend;
         $obPhoto->date = date('Y-m-d');
         $obPhoto->register();
@@ -59,8 +59,12 @@ class ApiPublic
     {
         $obPhoto = EntityPhoto::getPhotoById($id);
 
+        $obPhotoExp = explode("/",$obPhoto->img);
+
+        $obPhotoImgPath = end($obPhotoExp);
+
         // DELETE PHOTO
-        EntityPhoto::delete($obPhoto);
+        EntityPhoto::delete($obPhoto,$obPhotoImgPath);
 
         // RETURN DELETE SUCCESS
         return [

@@ -1,4 +1,4 @@
-# photoGallery
+# photoGalleryServer
 ## About this Project
 
 The idea of the project is:

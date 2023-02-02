@@ -81,7 +81,7 @@ $ composer dump-autoload
 
 - Start your APACHE server and MySql database of XAMPP.
 
-- With the server up and running, go to [here](https://github.com/leonardomoraisf/photoGalleryServer) and follow the steps.
+- With the server up and running, go to [here](https://github.com/leonardomoraisf/photoGallery) and follow the steps.
 
 ### Running
 
